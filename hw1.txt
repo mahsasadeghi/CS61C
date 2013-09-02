@@ -1,0 +1,49 @@
+Problem 1: Warehouse Scale Computers
+a.
+
+
+b.
+
+
+c.
+
+
+d.
+
+
+e.
+
+
+
+Problem 2: MapReduce Questions
+a.
+
+
+b.
+
+
+c.
+
+
+d.
+
+
+e.
+
+
+
+Problem 3: MapReduce Programming
+a.
+
+
+b.
+
+
+c.
+
+
+d.
+
+
+
+Problem 4: Do in hw1.c
