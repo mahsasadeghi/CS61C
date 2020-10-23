@@ -1,0 +1,76 @@
+CS 61C Homework 6
+Name: Mahsa Sadeghi
+Login: cs61c-yy
+
+
+
+P1 - Pipelining 
+1) 20MHz
+2) 50MHz
+3) 50ns in non-pipelined and 55ns in pipelined
+4) 2
+
+
+P2 - Waveform Diagrams
+1) B changes 5 times: 5, 9, 13, 17, 21 ns
+2) D changes 3 times: 13, 17, 21 ns
+3) A becomes stable at zero 3 times: 1, 9, 17 ns
+4) C becomes stable at one 2 times: 9, 17 ns
+
+
+
+P3 - Clock Frequency
+1) This accumulator won't work correctly due to the hold time of the register. As it is given, the register hold time is 3 ns while the propagation delay of the adder is 2 ns. This means that Si will stay stable 3 ns after the rising edge of the clock, but Yi will change 2 ns after clock edge, which is violating the hold time requirement.
+2) CPD: 4 + 2 + 2 + 2 ns = 10 ns
+   Freq = 1/CPD = 1/(10 ns) = 0.1 GHZ
+3) Add X_i and Y_i first, then add the result of that with the output of the register.
+
+
+
+P4 - Simple FSM and Truth Tables
+
+CurState	| Input	| NextState	| Output
+------------	|---------------------------------
+Seen0	00	|  0 	|Seen0	 00 	|  0 		
+Seen0	00 	|  1	|Seen1	 01 	|  0
+Seen1	01 	|  0	|Seen0 	 00 	|  0
+Seen1	01 	|  1	|Seen11	 10	|  1
+Seen11	10 	|  0	|Seen0	 00	|  1
+Seen11	10	|  1	|Seen11	 10  	|  1
+
+
+
+
+P5 - Truth Tables, Boolean Algebra, FSMs, Logic Circuits
+1)
+
+Out = (~S1).S0.(~In) 
+
+Next1 = (~S1).(~S0).In + (~S1).S0.In 
+	  = (~S1).In.((~S0) + S0) 
+	  = (~S1).In.(1)
+	  = (~S1).In
+
+Next0 = (~S1).(~S0).(~In) + (~S1).S0.(~In) + S1.(~S0).(~In)
+	  = (~S1).(~S0).(~In) + (~S1).S0.(~In) + S1.(~S0).(~In) + (~S1).(~S0).(~In)
+	  = (~S1).(~In).((~S0) + S0) + (~S0).(~In).((~S1) + S1)
+	  = (~S1).(~In) + (~S0).(~In)
+	  = (~In).((~S1) + (~S0))
+	  = (~In).(~(S1.S0))
+	  = ~(In + S1.S0)
+	 = ~In
+
+2) (~A) & (~B)
+
+
+Truth Table:
+
+S1	S2	Input	| Next S1   Next S2	Output
+------------------------------------------------------
+0	0	 0	|	0	1	 0
+0	0	 1	|	1	0	 0
+0	1	 0	|	0	1	 1
+0	1	 1	|	1	0	 0
+1	0	 0	|	0	1	 0
+1	0	 1	|	0	0	 0
+
