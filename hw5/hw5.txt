@@ -1,0 +1,27 @@
+CS61C Fa13 Homework 5
+Name: Mahsa Sadeghi
+Login: cs61c-yy
+
+Problem 1:
+Remember to include an explanation for each mis rate!
+
+a. Miss rate is 100%. 
+Based on the given assumptions, the block size is 16 ints and the number of sets is 8. Therefore, it can contain 128 integers at atime. Since we are using stride = 128 and direct cache map, we are mapping both 0 and 128 to the same spot in cache. So they are bumping each other out of that location regardless of alignment. Therefore, the miss rate is 100%.
+
+b. array[0] is aligned: Miss rate is 66% [2/3 of times]
+If the array is aligned on a block boundary, then using stride of 127 will cause miss, hit, miss. In other words, we will get two miss and one hit. We are using direct cache map that can contain 128 integers; 8 sets of 16 integers per block. So in this case we are retrieving the values of 0, 127, and 254. Since array[0] is aligned, 127 and 254 will map to the almost the same spot(It will actually get to one spot before it since 127+128=255). So they will bumped each other out. Therefore, we get a miss for 0, then we get hit for 127, but again we get miss for 254; and the same sequance happens over and over again. Therefore, in this case miss rate is 66%.
+
+   array[0] is not aligned: Miss rate 100%
+If the array is not aligned on a block boundary, then it is aligned at some other elements. This is due to the fact that all the values will be mapped the same block as their previous iterations, which cause the other elements to get bumped out. This happens over and over again. Therefore, the miss rate will be 100%
+
+
+Problem 3:
+
+Part 1:
+a. 1/(.4+(.6/4)) = 1.818  => 81.8% speedup
+
+b. 1/(.4+(.6/12)) = 2.22  => 122% speedup
+
+c. 1/(.4+(.6/n)) = 2.5  => 150% speedup
+
+Part 2: Because in the ideal case we are using sources that might/will be used to speed up the program. But in the actual case, there might be additional overhead that required in order to divide tasks and combine them again. So the ideal case might end up having faster speed than the actual case.
