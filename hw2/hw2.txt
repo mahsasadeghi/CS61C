@@ -1,0 +1,44 @@
+CS61C Fa13 HW2
+Name: Mahsa Sadeghi
+Login: cs61c-yy
+
+
+Problem 1
+
+  paste your pointer-based shift.c code below:
+
+* Sets the first n indices of array a to the original values of the indices one ahead of it
+* Ex: shift([1, 2, 3], 2) would return [2, 3, 3])
+*/
+void shift(int *a, int n) {
+    int i;
+    for(i = 0; i != n; i++)
+        *(a+i) = *(a+i+1);
+}
+
+
+Problem 2
+
+ #   Line #        Corrected Code 
+ -   ------        ---------------
+ 1.	3	typedef struct point{	
+ 
+ 2.	9	int total = 0;		
+		// total has to be initialized; if not, then in line #10, 
+		// garbage,whatever was in that memory location, will get added to the result.
+
+ 3. 	10	total += (*my_node)->var1 + (*my_node)->var2;	     
+		// Because a pointer to a pointer is passed to the function. 
+		// point **my_node is a pointer to pointer of type point	
+	
+ 4. 	15	struct point *arr[5];	
+		// has to be of the structure type to be able to point to it.
+
+ 5. 	16	struct point pt1 = {.var1 = 1, .var2 = 2};	
+		// This is the right way of initialization
+
+ 6.  	17	arr[0] = &pt1;		
+		// Because it is an array of pointers. we have to assign
+		// its (pt1's) address to arr[0].
+
+
