@@ -1,0 +1,153 @@
+/* 
+* proj 1-2
+* Farin Namdari
+* cs61c-kx
+*/
+
+
+1. How long did each of the six runs take? How many mappers and how many reducers did you use?
+
+5 Workers:
+	First Run:	(freedom, 0) on the 2005 dataset with combiner off
+		Total time takes: 12min and 25 sec
+		# map1: 80
+		# reduce1: 32
+		# map2: 0
+		# reduce2: 1
+		Total number of map: 80
+		Total number of reduce: 33
+		The size of input: 5,112,861,682
+
+	Second Run:	(freedom, 0) on the 2005 dataset with combiner on
+		Total time takes: 5min and 26 sec
+		# map1: 80
+		# red1: 32
+		# map2: 32
+		# red2: 1
+		Total number of map: 112
+		Total number of reduce: 33
+		Total size of input: 5,112,865,219
+
+	Third Run:	(capital, 0) on the 2006 dataset with combiner on
+		Total time takes: 15min and 17sec
+		# map1: 316
+		# red1:32
+		# map2:32
+		# red2:1
+		Total number of map: 348
+		Total number of reduce: 33
+		Total size of input: 19,139,828,087
+
+9 Workers:
+	Forth Run:	(capital, 0) on the 2006 dataset with combiner on
+		Total time takes: 9min and 29sec
+		# map1: 316
+		# red1:32
+		# map2:32
+		# red2:1
+		Total number of map: 348
+		Total number of reduce: 33
+		Total size of input: 19,139,811,958
+
+	Fifth Run:	(landmark, 1) on the 2006 dataset with combiner on
+		Total time takes: 10min and 1sec
+		# map1: 316
+		# red1:32
+		# map2:32
+		# red2:1
+		Total number of map: 348
+		Total number of reduce: 33
+		Total size of input: 19,139,814,455
+
+	Sixth Run:	(monument, 2) on the 2006 dataset with combiner on
+		Total time takes: 9min and 22sec
+		# map1: 316
+		# red1:32
+		# map2:32
+		# red2:1
+		Total number of map: 348
+		Total number of reduce: 33
+		Total size of input: 19,139,807,281
+
+************************************************************************************************************************************************************************************
+
+
+2. For the two runs with (freedom, 0), how much faster did your code run on the 5 workers with the combiner turned on than with the combiner turned off? Express your answer as a percentage.
+
+Increase in speed: [(x-y)/y] * 100
+=> Increase in speed: [(745-326)/326] * 100 = 128.53%
+
+Percentage [Being Faster]: [(x-y)/x] * 100
+=> Percentage = [(745-326)/745] * 100 = 0.562416 * 100 = 56.2416 ~ 56.2% faster
+
+************************************************************************************************************************************************************************************
+
+3. For the runs on the 2006 dataset, what was the median processing rate per GB (= 2^30 bytes) of input for the tests using 5 workers? Using 9 workers?
+
+Formula to use:
+[(Total input size)/(2^30)]/(Total time takes) = (Total input size)/[(2^30)*(Total times takes)
+
+5 workers:
+	(19,139,828,087)/[(2^30) * (15*60+17)] = 0.01944	[GB/Sec]
+
+9 workers:
+	(19,139,811,958)/[(2^30) * (9*60+29)] = 0.03133	[GB/Sec]
+	(19,139,814,455)/[(2^30) * (10*60+1)] = 0.02966	[GB/Sec]
+	(19,139,807,281)/[(2^30) * (9*60+22)] = 0.03172	[GB/Sec]
+	The median processing rate for 9 workers is 0.03133 [GB/Sec].
+
+************************************************************************************************************************************************************************************
+
+4. What was the percent speedup of running (capital, 0) with 9 workers over 5 workers? What is the maximum possible speedup, assuming your code is fully parallelizable? How well, in your opinion, does Hadoop parallelize your code? Justify your answer in 1-2 sentences.
+
+For the core to be fully parallalized, time with 9 workers should be less than or equal to the (9-5)/5 of the time with 5 worker.
+
+5 workers:
+	
+	9min and 29sec => 569
+	15min and 17sec => 917
+	(917-569)/569 = 0.611599 ~ 0.61
+  BUT
+	(9-5)/5 = 0.8
+
+	Since the time spend with 9 workers is not less than or equal to the time used by 9 workers, we can conclude that my code is not fully parallalized.
+
+Note: The maximum possible speedup, assuming the code is fully parallelized, is 80%.
+
+Hadoop parallalized my code by following amount:
+	[0.61/0.8] * 100 = 76.25%
+
+This means that data is not splited equally between the workers. In other words, some workers start their job with more data than the others. Or it can be that some of workers finishes faster and restarted with new set of data. In this case, they processed more data in compare to the others. 
+
+
+************************************************************************************************************************************************************************************
+
+5. For a single run on the 2006 dataset, what was the price per GB processed on with 5 workers? With 9 workers? (Recall that an extra-large instance costs $0.58 per hour, rounded up to the nearest hour.)
+
+Formula:
+	[Price/Hour] * [Hour/Total input size]
+
+5 workers:
+	Each worker: [0.58] * [1 / (19,139,828,087/2^30)] = 0.03254
+	Total 5 workers: 5 * 0.03254 = 0.1627 [Price per GB]
+
+	Note: Total time takes: [15/60 + 17/3600] = 0.25472 hour
+
+9 workers:
+	Each worker: [0.58] * [1/ (19,139,811,958/2^30)] = 0.03254
+	Total 9 workers: 9 * 0.03254 = 0.2929 [Price per GB]
+
+	Note: Total time takes: [9/60 + 29/3600] = 0.15806 hour
+
+************************************************************************************************************************************************************************************
+
+6. How much total money did you use to complete this project?
+
+ 5 workers:
+ 	5 * 0.58 * 2 = 5.8
+ 9 workers:
+ 	9 * 0.58 * 1 = 5.22
+
+ Total: 5.8 + 5.22 = $11.02
+
+// Note: For the 5 workers, I started one job, then I had to leave the lab. Thats why I have 2 hours instead of one hour.
