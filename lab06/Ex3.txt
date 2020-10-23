@@ -1,0 +1,51 @@
+3.
+
+# load address (addr is a label)
+la $s0, addr 
+	Answer: lui $s0, upper(addr) 
+			ori $s0, $s0, lower(addr) 
+
+# copy value
+move $s1, $s0
+	Answer: addu $s2,$0,$s0
+
+# set to bitwise inverse
+not $s1, $s1
+	Answer: xori $s1,$s1,1
+		OR
+			nor $s1, $s1, $0
+
+# load immediate
+li $s2, 0xAABBCCDD
+	Answer: lui $s2, 0xAABB
+			ori $s2, $s2, 0xCCDD
+
+li $t0, 5
+	Answer: addiu $t0,$0,5
+
+li $t1, 4
+	Answer: addiu $t1,$0,4
+
+# multiply
+mul $s0, $t0, $t1
+	Answer: mult $t0, $t1   #Stores results in "high" and "low" registers
+			mfhi $s0        # Move low 32 bits to $s0
+			mflo $s1        # Move high 32 bits to $s1
+
+# divide
+div $s0, $t0, $t1
+	Answer: div     $t0, $t1    # Stores quotient in 
+			mflo    $s0         # Quotient
+			mfhi    $s1         # Remainder
+
+# remainder
+rem $s0, $t0, $t1
+	Answer: rem $s0, $t0, $t1
+			div   $t0, $t1
+			mfhi  $s0         # Remainder
+			mflo  $s1         # Quotient
+
+# 0x00000000 operation (does nothing)
+	Answer: sll r0,r0,0
+
+nop : nop: “No operation.” The computer does nothing for one instruction cycle.
