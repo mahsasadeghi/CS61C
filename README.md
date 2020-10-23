@@ -1,4 +1,4 @@
-## CS61C-Machine Structures
+# CS61C-Machine Structures
 Course description: 
 The internal organization and operation of digital computers. 
 Machine architecture, support for high-level languages (logic, arithmetic, instruction sequencing) and operating systems 
